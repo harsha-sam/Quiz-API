@@ -35,20 +35,22 @@ const testSchema = new mongoose.Schema({
         required:[true, "questionnaire can't be empty"]
     },
     year: {
-        type: Number,
+        type: [Number],
         min: [1, "Current year can't be < 1"],
         max: [4, "Current year can't be > 4"],
         required: [true, 'year is necessary']
     },
     dept: {
-        type: String,
-        enum: ['CSE', 'ECE', 'IT', 'EEE', 'MECH', 'CE'],
+        type: [String],
         required: [true, 'dept is necessary']
     },
     section: {
-        type: String,
-        enum: ['A', 'B', 'C'],
+        type: [String],
         required: [true, 'section is necessary']
+    },
+    dateAndTime: {
+        type: mongoose.Schema.Types.Date,
+        required: true
     }
 })
 const Test = mongoose.model("Test", testSchema);

@@ -31,7 +31,7 @@ app.get('/quiz/:tId', async(req, res) => {
     }
 })
 app.post('/quiz', async(req, res) => {
-    const { testName, subject, host, questions, options, answers, year, dept, section } = req.body;
+    const { testName, subject, host, questions, options, answers, year, dept, section, dateAndTime } = req.body;
     let questionnaire = []
     questions.forEach((q, index) => {
         const question = {
@@ -45,12 +45,14 @@ app.post('/quiz', async(req, res) => {
         };
         questionnaire.push(question);
     });
-    const test = new Test({name: testName, subject, host, questionnaire, year, dept, section});
+    const test = new Test({name: testName, subject, host, questionnaire, year, dept, section, dateAndTime});
+
     try{
         const t = await test.save();
         res.json("Success!");
     }
     catch(err){
+        console.log("Error", err);
         res.status(400).json("Something went wrong !");
     }
 })
