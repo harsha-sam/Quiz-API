@@ -58,12 +58,24 @@ app.post('/quiz', async(req, res) => {
 })
 
 // signin
-app.get('/signin',async (req, res) => {
+app.post('/signin',async (req, res) => {
     const { uId, password } = req.body;
     try{
-        const usr = await User.findOne({uId}, ('hash -_id')).exec();
+        const usr = await User.findOne({uId}).exec();
         const result = await bcrypt.compare(password, usr.hash);
-        res.json(result);
+        if (result){
+            if (usr.role === 'student'){
+                const stud = await Student.findOne({sId: usr._id}).populate("sId", 'role uId').exec();
+                res.json({...stud._doc, role: stud.sId.role});
+            }
+            if (usr.role === 'faculty'){
+                const fac = await Faculty.findOne({fId: usr._id}).exec("fId", 'role uId').exec();
+                res.json({...fac._doc, role: fac.fId.role});
+            }
+        }
+        else{
+            throw new Error("Wrong Password !")
+        }
     }
     catch(err){
         console.log("Error !",err);
@@ -82,11 +94,11 @@ app.post('/register', async (req, res) => {
     catch (err) {
         console.log("Hashing Error !", err);
     }
-    const user = new User({ uId, name, hash, role});
+    const user = new User({ uId, hash, role});
     user.save()
     .then(() => {
         if (role === "student"){
-            const student = new Student({ year, dept, section});
+            const student = new Student({ name, year, dept, section});
             student.sId = user;
             student.save()
             .then(() => {

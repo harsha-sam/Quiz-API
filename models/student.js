@@ -8,6 +8,10 @@ const studentSchema = new mongoose.Schema({
         unique: true,
         required: [true, 'id is necessary']
     },
+    name: {
+        type: String,
+        required: [true, 'name is necessary']
+    },
     year: {
         type: Number,
         min: [1, "Current year can't be < 1"],

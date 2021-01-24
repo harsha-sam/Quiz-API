@@ -8,6 +8,10 @@ const facultySchema = new mongoose.Schema({
         unique: true,
         required: [true, 'id is necessary']
     },
+    name: {
+        type: String,
+        required: [true, 'name is necessary']
+    },
     dept: {
         type: String,
         enum: ['CSE', 'ECE', 'IT', 'EEE', 'MECH', 'CE'],

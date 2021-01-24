@@ -6,10 +6,6 @@ const userSchema = new mongoose.Schema({
         unique: true,
         required: [true, 'id is necessary']
     },
-    name: {
-        type: String,
-        required: [true, 'name is necessary']
-    },
     hash: {
         type: String,
         required: [true, 'pass is necessary']
