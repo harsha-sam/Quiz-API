@@ -17,12 +17,14 @@ const testSchema = new mongoose.Schema({
     },
     questionnaire: {
         type: [{
+            _id: false,
             id: Number,
             text: {
                 type: String,
                 required: true
             },
             options: {
+                _id: false,
                 type: Object,
                 minlength: 2,
                 required: true
@@ -48,10 +50,14 @@ const testSchema = new mongoose.Schema({
         type: [String],
         required: [true, 'section is necessary']
     },
-    dateAndTime: {
+    startDateAndTime: {
         type: mongoose.Schema.Types.Date,
-        required: true
-    }
+        required: [true, "Test Start Date And Time Can't be empty"]
+    },
+    endDateAndTime: {
+        type: mongoose.Schema.Types.Date,
+        required: [true, "Test End Date And Time Can't be empty"]
+    },
 })
 const Test = mongoose.model("Test", testSchema);
 module.exports = Test;
