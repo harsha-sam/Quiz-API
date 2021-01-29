@@ -2,8 +2,14 @@ const handleQuizGet = (db) => async(req, res) => {
     const { Test } = db;
     const { tId } = req.params;
     try {
-        const questionnaire = await Test.findById(tId, ('questionnaire -_id')).exec();
-        res.json(questionnaire);
+        const data = await Test.findById(tId, ('-_id')).exec();
+        const time =  new Date();
+        if (data._doc.endDateAndTime > time && data._doc.startDateAndTime <= time){
+            res.json(data._doc.questionnaire);
+        }
+        else{
+            res.status(400).json("Already test has been completed")
+        }
     }
     catch (err) {
         res.status(400).json("Something went wrong. Please try again later.");

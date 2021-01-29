@@ -14,7 +14,7 @@ const responseSchema = new mongoose.Schema({
         required: true
     },
     choices: {
-        type: [Number],
+        type: {Number},
         required: true
     },
     securedScore: {

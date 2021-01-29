@@ -4,11 +4,11 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const body_parser = require('body-parser')
 const db = require('./Models');
-const { User, Student, Faculty, Response, Test } = db;
 const { handleSignIn } = require("./controllers/signin");
 const { handleRegister } = require('./controllers/register');
 const { getAssessments } = require('./controllers/assessments');
 const { handleQuizGet, handleQuizPost } = require('./controllers/quiz');
+const { handlePostResponse } = require('./controllers/response');
 
 mongoose.connect("mongodb://localhost/quiz", {
     useNewUrlParser: true,
@@ -31,6 +31,7 @@ app.post('/register', handleRegister(db))
 app.post('/quiz', handleQuizPost(db))
 app.get('/quiz/:tId', handleQuizGet(db))
 app.post('/assessments', getAssessments(db))
+app.post('/response', handlePostResponse(db))
 
 app.listen(3000, () => {
     console.log("Listening on port 3000")
