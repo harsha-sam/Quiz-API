@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const body_parser = require('body-parser')
-const db = require('./Models');
+const db = require('./models');
 const { handleSignIn } = require("./controllers/signin");
 const { handleRegister } = require('./controllers/register');
 const { getAssessments } = require('./controllers/assessments');
@@ -33,6 +33,6 @@ app.get('/quiz/:tId', handleQuizGet(db))
 app.post('/assessments', getAssessments(db))
 app.post('/response', handlePostResponse(db))
 
-app.listen(3000, () => {
-    console.log("Listening on port 3000")
+app.listen(process.env.PORT || 3000, () => {
+    console.log(`App is running on port ${process.env.PORT || 3000}`)
 })
