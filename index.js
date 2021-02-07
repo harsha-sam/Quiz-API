@@ -25,7 +25,9 @@ const app = express();
 app.use(cors())
 app.use(body_parser.json())
 
-
+app.get('/', (req, res) => {
+    res.send("Hello !")
+})
 app.post('/signin', handleSignIn(db))
 app.post('/register', handleRegister(db))
 app.post('/quiz', handleQuizPost(db))
