@@ -1,3 +1,4 @@
+require('dotenv').config({ path: __dirname + '/.env' })
 const express = require('express');
 // mongoose required to connect to mongodb
 const mongoose = require('mongoose');
@@ -9,8 +10,7 @@ const { handleRegister } = require('./controllers/register');
 const { getAssessments } = require('./controllers/assessments');
 const { handleQuizGet, handleQuizPost } = require('./controllers/quiz');
 const { handlePostResponse } = require('./controllers/response');
-
-mongoose.connect("mongodb://localhost/quiz", {
+mongoose.connect(process.env.mongodb_cluster_url,{
     useNewUrlParser: true,
     useUnifiedTopology: true, useCreateIndex: true
 })
